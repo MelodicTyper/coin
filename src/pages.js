@@ -51,7 +51,7 @@ export function home () {
           <p>Wash car windows</p>
         </button>
         <button class = "option-box" style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/e/e1/Taromatas.jpg)">
-          <p>Recycle and turn in bottles</p>
+          <p>TODO</p>
         </button>
         <button class = "option-box" style="background-image:url(https://www.nicenstripy.com/ckfinder/userfiles/images/blog/large-lawn-with-stripes.jpg)">
           <p>Mow Lawns</p>
@@ -71,7 +71,7 @@ export function home () {
           <p>Attend free lesson</p>
         </button>
         <button class = "option-box" style="background-image:url(https://live.staticflickr.com/4103/5045320233_49e54fa7fa.jpg)">
-          <p>Research the internet</p>
+          <p>Research on the internet</p>
         </button>
         <button class = "option-box" style="background-image:url()">
           <p>Go to community event</p>
@@ -178,5 +178,33 @@ export function home () {
     <script>
       
     </script>
+  `
+}
+
+export function action () {
+  return `
+    <div id = "actionText">
+      
+    </div>
+    <button>Ok</button>
+    <style>
+      .action {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        flex-direction: column;
+        gap: 2vh;
+      }
+      .action button {
+        font-size: 1.5rem;
+      }
+    </style>
+  `
+}
+
+export function end () {
+  return `
+  ya lose
   `
 }
