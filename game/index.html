@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/all.css" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SUSE+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    
+    <title>Coin</title>
+    
+    <style>
+         {
+            outline: 1px solid red;
+        }
+        header {
+            margin-bottom: 4vh;
+            display: flex;
+            justify-content: center;
+            width: 100vw;
+            font-size: 2rem;
+            text-decoration: 6px underline var(--accent-color);
+        }
+        main {
+            margin: 0 20vw 0 20vw;
+            height: 70vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-track-color: var(--main-color);
+        }
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+            padding: 0 20vw;
+            height: 10vh;
+            font-size: 1.5rem;
+        }
+        footer img {
+            width: 2vh;
+            
+        }
+        footer div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+    </style>
+  </head>
+  <body>
+    <header>
+        <h1>Coin</h1>
+    </header>
+    <main>
+        
+    </main>
+    <footer>
+        <div>
+            Day&nbsp;
+                <p id="currentDay">1</p>
+            /30
+        </div>
+        <div>
+            <span id="currentCoins">
+                2
+            </span>
+            <img src="/coin.svg" />
+        </div>
+    </footer>
+    <script type="module" src="/src/game.js"></script>
+  </body>
+</html>
