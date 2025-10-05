@@ -1,0 +1,19 @@
+* {
+    font-family: "SUSE Mono";
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    width: auto;
+}
+:root {
+    --main-color:#b6cbe3;
+    --accent-color: #4876a8;
+}
+body {
+    background-color:var(--main-color);
+}
+button {
+    background-color: transparent;
+    border: none;
+}
+
