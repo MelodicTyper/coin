@@ -4,10 +4,75 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>coin</title>
+    <link rel="stylesheet" href="/src/all.css" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SUSE+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    
+    <title>Coin</title>
+    
+    <style>
+         {
+            outline: 1px solid red;
+        }
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 5vh 0;
+            padding: 1vh;
+            overflow: visible;
+        }
+        h1 {
+            font-size: 5rem;
+        }
+        img {
+            height: 55vh;
+            display: absolute;
+            animation: 4s spin infinite linear;
+            z-index: 0;
+            margin: 5vh;
+        }
+        
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        a {
+            display: absolute;
+            font-size:3.5rem;
+            border: 1vh ridge var(--accent-color);
+            transition: scale 0.3s ease-in-out;
+            border-radius: 10px;
+            z-index: 100;
+            padding: 1vh;
+            margin: 2vh;
+            color: black;
+            text-decoration: none;
+        }
+        a:hover {
+            scale: 120%;
+            
+            cursor: pointer;
+        }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <header>
+        <h1>
+            Coin
+        </h1>
+        <img src="/coin.svg" alt="A coin"/>
+        <a href="/game/">
+            Play!
+        </a>
+    </header>
   </body>
 </html>

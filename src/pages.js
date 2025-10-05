@@ -41,15 +41,104 @@ export function home () {
     <div class = "option-section">
       <h3>Work</h3>
       <div class = "option-row">
-        <div class = "option-box">
-        </div>
+        <button class = "option-box" style="background-image:url()">
+          <p>Find a job</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p>Go to job</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p>Wash car windows</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p>Recycle and turn in bottles</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p>Mow Lawns</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p>Mow Lawns</p>
+        </button>
+      </div>
+    </div>
+    <div class = "option-section">
+      <h3>Build Skills</h3>
+      <div class = "option-row">
+        <button class = "option-box" style="background-image:url()">
+          <p>Go to library</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p>Attend free lesson</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p>Research the internet</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p>Go to community event</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p>Hire Life Coach</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p></p>
+        </button>
+      </div>
+    </div>
+    <div class = "option-section">
+      <h3>Luck</h3>
+      <div class = "option-row">
+        <button class = "option-box" style="background-image:url()">
+          <p>Wishing Well</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p>Gamble</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p>Invest in Bitcoin</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p>Go metal detecting</p>
+        </button>
+      </div>
+    </div>
+    <div class = "option-section">
+      <h3>Shop</h3>
+      <div class = "option-row">
+        <button class = "option-box" style="background-image:url()">
+          <p>Go shopping</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p>Go thrifting</p>
+        </button>
+        <button class = "option-box" style="background-image:url()">
+          <p>Buy food</p>
+        </button>
       </div>
     </div>
     
     
-    
     <style>
-      .home .option {
+      .home h2 {
+        font-size: 2rem;
+      }
+      .home .option-section {
+        
+      }
+      .home .option-row {
+        display: flex;
+        gap: 1vw;
+        flex-wrap: wrap;
+      }
+      .home .option-box {
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        width: clamp(200px, 15vw, 300px);
+        aspect-ratio: 2/1;
+        background-color: white;
+        margin: 5px;
+        padding: 2px;
+        border-radius: 6px;
         
       }
     </style>
