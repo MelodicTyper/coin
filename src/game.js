@@ -7,6 +7,7 @@ const dayElement = document.querySelector("#currentDay");
 
 
 
+
 let state = {
   position: "home",
   coins: 1,
@@ -18,8 +19,10 @@ window.stats = {
   skill: 0,
   charisma: 0,
   luck: 50,
-  
 }
+
+window.inventory = [];
+window.attributes = [];
 
 function game () {
   coinElement.textContent = state.coins;
@@ -33,6 +36,9 @@ function game () {
     case "home":
       contentElement.className = "home"
       contentElement.innerHTML = pages.home()
+      document.querySelectorAll("button.option-box").forEach((el) => {
+        el.addEventListener("click", () => takeAction(el))
+      })
   }
 }
 
@@ -43,6 +49,16 @@ function changePage (page) {
 
 window.changePage = changePage; // Make this accessible to onclick events
 
+function takeAction (actionElement) {
+  let action = actionElement.textContent.trim().toUpperCase()
+  console.log(action)
+  switch (action) {
+    case "FIND A JOB":
+      
+      break;
+  }
+}
+window.takeAction = takeAction
 
 
 game();
