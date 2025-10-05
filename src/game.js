@@ -16,9 +16,9 @@ let state = {
 
 window.stats = {
   energy: 100,
-  skill: 0,
+  skill: 25,
   charisma: 25,
-  luck: 0,
+  luck: 25,
 }
 
 window.inventory = [];
@@ -222,7 +222,7 @@ function takeAction (actionElement) {
       }
         break;
     case "GO METAL DETECTING":
-      if(attributes.includes("metaldetector")) {
+      if(attributes.includes("Metal Detector")) {
         actionText.textContent = "You go out metal detecting, and dig up a few signals. "
         if(helper.chance(stats.luck +10)) {
           actionText.textContent += "You find some small coins - one of them is even silver! "
@@ -256,8 +256,8 @@ function takeAction (actionElement) {
         }
       }
       break;
-      case "GO MAGNET FISHING":
-        if(attributes.includes("magnet")) {
+    case "GO MAGNET FISHING":
+        if(attributes.includes("Magnet")) {
           actionText.textContent = "You go out magnetic fishing, and pull up a few things. "
           if(helper.chance(stats.luck +10)) {
             actionText.textContent += "You find some small coins - one of them is even silver! "
@@ -279,7 +279,122 @@ function takeAction (actionElement) {
           actionText.textContent = "You go out magnet fishing, but you realize you don't own a magnet. You go out into the water, and try to swim around and find things, but to no avail. You're exausted."
           stats.energy -= 20;
         }
-        break;
+      break;
+      // Here's where the fun begins
+    case "PICKPOCKET SOMEONE":
+      if(stats.skill > helper.generateRandom(0, 50)) {
+        actionText.textContent = "You successfully grab someone wallet without them noticing. You check to see what's inside. "
+        if(helper.chance(stats.luck -20)) {
+          actionText.textContent += "You found a decent amount of coins in their wallet. Nice job? "
+          stats.energy -= 5;
+          stats.luck -= 10;
+          stats.charisma -= 10;
+          state.coins += 50;
+        } else {
+          actionText.textContent += "You didn't find much good stuff. You wish you could return the wallet. "
+          stats.energy -= 5;
+          stats.luck -= 10;
+          stats.charisma -= 5;
+          state.coins += 1; // All that for this - oof
+        }
+        if(helper.chance(10)) {
+          actionText.textContent += "As you get home, there's cops waiting for you. The wallet had a tracker in it! "
+          stats.energy -= 40;
+          stats.luck -= 10;
+          stats.charisma -= 10;
+          state.coins -= 10;
+          if(attributes.includes("thief")) {
+            actionText.textContent += "Since you already had gotten caught for a crime, you're put in jail for a few days."
+            state.day += 4
+          } else {
+            attributes.push("thief")
+          }
+        }
+      } else {
+        actionText.textContent = "You try to grab a wallet, but fail. They report you to the police, and you get fined. "
+        if(attributes.includes("thief")) {
+          actionText.textContent += "Since you already had gotten caught for a crime, you're put in jail for a few days."
+          state.day += 4
+        } else {
+          attributes.push("thief")
+        }
+      }
+      break;
+    case "SHOPLIFT":
+      if(stats.charisma > helper.generateRandom(0, 50)) {
+        actionText.textContent = "You go into the store, and grab a few things. You eat good food, and refuel your energy! You also \"forgot\" to pay... You sell some of the items later."
+        stats.energy += 20;
+        stats.luck -= 10;
+        stats.charisma -= 10;
+        state.coins += 5;
+        if(helper.chance(10)) {
+          actionText.textContent += "As you get home, there's cops waiting for you. They must've caught you on camera. "
+          stats.energy -= 60;
+          stats.luck -= 10;
+          stats.charisma -= 10;
+          state.coins -= 10;
+          if(attributes.includes("thief")) {
+            actionText.textContent += "Since you already had gotten caught for a crime, you're put in jail for a few days."
+            state.day += 4
+          } else {
+            attributes.push("thief")
+          }
+        }
+      } else {
+        actionText.textContent = "You get noticed while taking things. They call the cops, who fine you. "
+        if(attributes.includes("thief")) {
+          actionText.textContent += "Since you already had gotten caught for a crime, you're put in jail for a few days."
+          state.day += 4
+        } else {
+          state.coins -= 10;
+          attributes.push("thief")
+        }
+      }
+      break;
+    case "KILL TIME":
+      actionText.textContent = "You go to a dark alley, make sure no one is watching, and kill time. You wake up a few days later. What were you thinking?? It was restful at least."
+      state.day += 2;
+      stats.energy += 10;
+      break;
+    case "SELL FAKE LUXURY ITEM":
+      if (inventory.length == 0) {
+        actionText.textContent = "You go out to sell your cheap item as something much fancier, but you realize you don't actually own anything. Maybe go buy something before you try to sell it."
+        stats.energy -= 10;
+      } else {
+        let chosenItem = helper.generateRandom(0, inventory.length - 1)
+        let chosenItemName = inventory[chosenItem]
+        actionText.textContent = `You sell off your ${chosenItemName}. `
+        
+        if (helper.chance(charisma + 10)) {
+          actionText.textContent += "You sell the person on how valuable the item is, and you make a large profit!"
+          state.coins += 75;
+        } else {
+          actionText.textContent += "They don't buy it, or how valuable the item is. You just wasted a bunch of time."
+          stats.energy -= 10;
+        }
+      }
+      break;
+    case "COUNTERFIT MONEY":
+      actionText.textContent = "Wow, counterfitting money is difficult. You have the skills to do it... right? "
+      if(stats.skill > 75) {
+        actionText.textContent += "Of course you do! You just print off some money, and you go on happily with your day. "
+        state.coins += 500;
+        stats.luck -= 15;
+        if(helper.chance(40)) {
+          actionText.textContent += "However, when you try to spend your money, someone can tell and calls the cops. You get put in jail for 2 weeks."
+          state.day += 14;
+          state.coins -= 700;
+        }
+      } else {
+        actionText.textContent += "No? Why would you even try? You waste a bunch of money buying materials to counterfit money. "
+        stats.luck -= 15;
+        state.coins -= 50;
+      }
+      stats.energy -= 15;
+      break;
+    case "GO SHOPPING":
+      actionText.innerHTML = "<button></button>"
+      break;
   }
   state.day++;
 }

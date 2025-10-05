@@ -73,13 +73,13 @@ export function home () {
         <button class = "option-box" style="background-image:url(https://live.staticflickr.com/4103/5045320233_49e54fa7fa.jpg)">
           <p>Research on the internet</p>
         </button>
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyLsoxwZscBZInqYaPrQ21Xy3TIn72huW0ZA&s)">
           <p>Go to community event</p>
         </button>
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjcn9vpFPoHdXU8n4LJGj7hRdgs-feFebloQ&s)">
           <p>Hire Life Coach</p>
         </button>
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://campunahliya.org/wp-content/uploads/Health-and-Wellness-Programs.jpg)">
           <p>Volunteer</p>
         </button>
       </div>
@@ -87,19 +87,19 @@ export function home () {
     <div class = "option-section">
       <h3>Luck</h3>
       <div class = "option-row">
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://cdn12.picryl.com/photo/2016/12/31/garden-wishing-well-well-nature-landscapes-42fc82-1024.jpg)">
           <p>Wishing Well</p>
         </button>
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://images.pexels.com/photos/7594299/pexels-photo-7594299.jpeg)">
           <p>Gamble</p>
         </button>
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://www.bard.edu/files/pr/main_news_image.php?id=17912)">
           <p>Invest in Bitcoin</p>
         </button>
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/c/c4/Metal_Detector_User-2.jpg)">
           <p>Go metal detecting</p>
         </button>
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo9ahk-SA6iYeuOLmjuqi8dy2Z6jl-aXSgKg&s)">
           <p>Go magnet fishing</p>
         </button>
         
@@ -108,19 +108,19 @@ export function home () {
     <div class = "option-section">
       <h3>Questionable</h3>
       <div class = "option-row">
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/6/67/Policemen_apprehend_a_pickpocket_taking_a_license_from_a_pub_Wellcome_V0019439.jpg)">
           <p>Pickpocket someone</p>
         </button>
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://source.roboflow.com/Jqs0CjADPHVf7HhO8BMwqUyqtys1/2JgAL9RUDh0xrGAlSkvI/original.jpg)">
           <p>Shoplift</p>
         </button>
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://media.istockphoto.com/id/1467023857/vector/shooting-range-diamond-caution-sign-rifle-range-symbol.jpg?s=612x612&w=0&k=20&c=PxeQEM3LrqvrF-xYhF9-VEa0uWCHrVdkjpYH_zvDGAY=)">
           <p>Kill time</p>
         </button>
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPVYgMdl0iU224xZSILssrj3Pkskvo5Yk49w&s)">
           <p>Sell fake luxury item</p>
         </button>
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://live.staticflickr.com/2089/2177283006_4ee1cc4186.jpg)">
           <p>Counterfit money</p>
         </button>
         
