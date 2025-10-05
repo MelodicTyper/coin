@@ -124,12 +124,162 @@ function takeAction (actionElement) {
         actionText.textContent += "A few people take you up on your offer, and you get working. It's tough work, but you make some money."
         attributes.push("allergies")
         stats.energy -= 20;
+        stats.luck -= 5;
       } else {
         actionText.textContent += "Nobody wants their lawn mowed by a stranger, so you go home with no money."
         stats.energy -= 10;
       }
       break;
-    
+    case "DRIVE UBER":
+      actionText.textContent = "You go out and drive uber. It's tough to make money with high gas prices and little payment, and you need tips to profit. "
+      if (helper.chance(stats.charisma)) {
+        actionText.textContent += "You make good conversation with your passengers, and they tip well!"
+        state.coins += 15;
+        stats.energy -= 15;
+      } else {
+        if (helper.chance(75)) {
+          actionText.textContent += "People don't seem very fond of you, and the tips show it. You barely make any money."
+          stats.energy -= 15;
+          state.coins += 2;
+        } else {
+          actionText.textContent += "People leave bad reviews, and you spent more on gas than what you made."
+          stats.energy -= 20;
+          state.coins -= 5;
+        }
+        
+      }
+      break;
+    case "GO TO LIBRARY":
+      actionText.textContent = "You go to the library, and gain valuable knowledge. You feel more rested."
+      stats.energy += 5;
+      stats.skill += 5;
+      break;
+    case "ATTEND FREE LESSON":
+      actionText.textContent = "You attend a lesson, and learn valuable skills. You also connect with other people."
+      stats.energy -= 10;
+      stats.skill += 2;
+      stats.charisma += 5
+      break;
+    case "RESEARCH ON THE INTERNET":
+      actionText.textContent = "You look on the internet for knowledge, and you find too much of it. It's exausting, but you do now a lot more now."
+      stats.energy -= 10;
+      stats.skill += 7;
+      stats.charisma -= 10; // touch grass yall
+      break;
+    case "GO TO COMMUNITY EVENT":
+      actionText.textContent = "You go out to the farmers market, and you enjoy all the people. You do spend a bit of money, however."
+      stats.energy -= 5;
+      stats.skill += 1;
+      stats.charisma += 15;
+      state.coins -= 5;
+      break;
+    case "VOLUNTEER":
+      actionText.textContent = "You go out and volunteer in your community. You spend a lot of energy, make no money - but you create some great connections and help the community!"
+      stats.energy -= 20;
+      stats.skill += 1;
+      stats.charisma += 10;
+      break;
+    case "WISHING WELL":
+      actionText.textContent = "You drop a few of your coins down the wishing well. You feel more lucky... and also wish you had your coins back."
+      stats.energy -= 2;
+      stats.luck += 5 + helper.generateRandom(0, 15);
+      state.coins -= 5;
+      break;
+    case "GAMBLE":
+      actionText.textContent = "You start gambling you coins, and before you know it, you've gone all in on a poker hand. A straight is pretty good, right? "
+      if (helper.chance(stats.luck + 10)) {
+        actionText.textContent += "You win the hand! You take your winnings and leave with twice your money."
+        stats.energy -= 5;
+        stats.charisma -= 5;
+        stats.skill -= 5;
+        stats.luck -= 50; // Better not win again
+        state.coins = state.coins * 2;
+      } else {
+        actionText.textContent += "You lose to a flush, that flushes all your money away. Oof."
+        stats.energy -= 5;
+        stats.luck += 20; // Better luck next time
+        state.coins = 0;
+      }
+      break;
+    case "INVEST IN BITCOIN":
+      if(attributes.includes("bitcoiner")) {
+        actionText.textContent = "You check back on your bitcoin. "
+        if(helper.chance(stats.luck-50)) {
+          actionText.textContent += "Turns out, you made a fortune! You cash out, and call it a day. Maybe you should invest more?"
+          stats.luck -= 50; // You really shouldn't invest more
+          stats.charisma -= 50; // Is it worth the sacrifise?
+          state.coins += 500; // For this amount of coins maybe
+        } else {
+          actionText.textContent += "Bitcoin crashed. Womp womp. Your bitcoin is worth nothing now."
+          stats.luck += 10;
+        }
+        attributes.splice(attributes.indexOf("bitcoiner"), 1)
+      } else {
+        actionText.textContent = "You invest a small amount into bitcoin. Maybe it'll turn into something, who knows?"
+        state.coins -= 10;
+        attributes.push("bitcoiner")
+        state.energy -= 5;
+      }
+        break;
+    case "GO METAL DETECTING":
+      if(attributes.includes("metaldetector")) {
+        actionText.textContent = "You go out metal detecting, and dig up a few signals. "
+        if(helper.chance(stats.luck +10)) {
+          actionText.textContent += "You find some small coins - one of them is even silver! "
+          stats.energy -= 10;
+          state.coins += 15;
+          stats.charisma -= 5;
+          stats.luck += 2;
+        } else {
+          actionText.textContent += "Just bottle caps. "
+          stats.energy -= 10;
+          stats.charisma -= 5;
+          stats.luck += 2;
+        }
+        if(helper.chance(2)) {
+          actionText.textContent  += "But then you find one more hole. It's a good signal, and as you dig it out, you see a small hint of gold. YOU FOUND GOLD!"
+          stats.luck += 10;
+          stats.energy -= 10;
+          stats.charisma += 5;
+          state.coins += 500;
+        }
+      } else {
+        actionText.textContent = "You go out metal detecting, but you realize you don't own a metal detector. You should probably go buy one. At least you realized before you lost the entire day."
+        state.day--; // You get to keep the day
+        stats.luck -= 5; // Slight bad luck
+        stats.energy -= 5;
+        if(helper.chance(2)) {
+          actionText.textContent  += "You stumble upon a small glint on the street walking home, and as you pick it up, you found a small coin!"
+          stats.luck += 50;
+          stats.charisma += 5;
+          state.coins += 1;
+        }
+      }
+      break;
+      case "GO MAGNET FISHING":
+        if(attributes.includes("magnet")) {
+          actionText.textContent = "You go out magnetic fishing, and pull up a few things. "
+          if(helper.chance(stats.luck +10)) {
+            actionText.textContent += "You find some small coins - one of them is even silver! "
+            stats.energy -= 10;
+            state.coins += 15;
+            stats.charisma -= 5;
+            stats.luck += 2;
+          } else {
+            actionText.textContent += "Just scrap metal "
+            stats.energy -= 10;
+            stats.charisma -= 5;
+            stats.luck += 2;
+          }
+          if(helper.chance(2)) {
+            actionText.textContent  += "But you also pull up something small and metal, and it's roundish. Looks like... A GRENADE! And it goes off. Oof."
+            stats.energy -= 200;
+          }
+        } else {
+          actionText.textContent = "You go out magnet fishing, but you realize you don't own a magnet. You go out into the water, and try to swim around and find things, but to no avail. You're exausted."
+          stats.energy -= 20;
+        }
+        break;
   }
   state.day++;
 }
