@@ -23,6 +23,7 @@ window.stats = {
 
 window.inventory = [];
 window.attributes = [];
+window.possibleItems = ["Metal Detector", "Magnet", "Vintage Record", "Guitar", "Mask", "4 Leaf Clover", "Fishing Rod", "Old Treasure Map", "Harmonica", "Camera"]
 
 function game () {
   coinElement.textContent = state.coins;
@@ -222,7 +223,7 @@ function takeAction (actionElement) {
       }
         break;
     case "GO METAL DETECTING":
-      if(attributes.includes("Metal Detector")) {
+      if(inventory.includes("Metal Detector")) {
         actionText.textContent = "You go out metal detecting, and dig up a few signals. "
         if(helper.chance(stats.luck +10)) {
           actionText.textContent += "You find some small coins - one of them is even silver! "
@@ -257,7 +258,7 @@ function takeAction (actionElement) {
       }
       break;
     case "GO MAGNET FISHING":
-        if(attributes.includes("Magnet")) {
+        if(inventory.includes("Magnet")) {
           actionText.textContent = "You go out magnetic fishing, and pull up a few things. "
           if(helper.chance(stats.luck +10)) {
             actionText.textContent += "You find some small coins - one of them is even silver! "
@@ -315,9 +316,11 @@ function takeAction (actionElement) {
         if(attributes.includes("thief")) {
           actionText.textContent += "Since you already had gotten caught for a crime, you're put in jail for a few days."
           state.day += 4
+          
         } else {
           attributes.push("thief")
         }
+        state.coins -= 15;
       }
       break;
     case "SHOPLIFT":
@@ -344,7 +347,8 @@ function takeAction (actionElement) {
         actionText.textContent = "You get noticed while taking things. They call the cops, who fine you. "
         if(attributes.includes("thief")) {
           actionText.textContent += "Since you already had gotten caught for a crime, you're put in jail for a few days."
-          state.day += 4
+          state.day += 4;
+          state.coins -= 10;
         } else {
           state.coins -= 10;
           attributes.push("thief")
@@ -393,8 +397,33 @@ function takeAction (actionElement) {
       stats.energy -= 15;
       break;
     case "GO SHOPPING":
-      actionText.innerHTML = "<button></button>"
+      let items = [possibleItems[helper.generateRandom(0, possibleItems.length-1)],possibleItems[helper.generateRandom(0, possibleItems.length)],possibleItems[helper.generateRandom(0, possibleItems.length)]]
+      actionText.innerHTML = `You have a few things you find, all costing 10 coins: <button id = "buy">${items[0]}</button><button id = "buy">${items[1]}</button><button id = "buy">${items[2]}</button>`
+      document.querySelectorAll("button#buy").forEach((el) => {
+        el.addEventListener("click", () => {
+          inventory.push(el.textContent)
+          possibleItems.splice(possibleItems.indexOf(el.textContent), 1)
+          actionText.textContent = "You bought " + el.textContent + " for 10 coins!"
+          state.coins -= 10;
+        })
+      })
       break;
+      case "GO THRIFTING":
+        let titems = [possibleItems[helper.generateRandom(0, possibleItems.length-1)],possibleItems[helper.generateRandom(0, possibleItems.length)],possibleItems[helper.generateRandom(0, possibleItems.length)]]
+        actionText.innerHTML = `You have a few things you find, all costing 5 coins: <div><button id = "buy">${titems[0]}</button><button id = "buy">${titems[1]}</button></div>`
+        document.querySelectorAll("button#buy").forEach((el) => {
+          el.addEventListener("click", () => {
+            inventory.push(el.textContent)
+            possibleItems.splice(possibleItems.indexOf(el.textContent), 1)
+            actionText.textContent = "You bought " + el.textContent + " for 5 coins!"
+            state.coins -= 5;
+          })
+        })
+        break;
+    case "BUY FOOD":
+      actionText.textContent = "You feel better after buying some good food."
+      state.coins -= 15;
+      stats.energy += 30;
   }
   state.day++;
 }

@@ -129,13 +129,13 @@ export function home () {
     <div class = "option-section">
       <h3>Shop</h3>
       <div class = "option-row">
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://freerangestock.com/sample/82304/bustling-shopping-center-filled-with-people.jpg)">
           <p>Go shopping</p>
         </button>
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://liveandletsfly.com/wp-content/uploads/2025/01/Route-66-Road-Trip-Day-Five-6.jpeg)">
           <p>Go thrifting</p>
         </button>
-        <button class = "option-box" style="background-image:url()">
+        <button class = "option-box" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbA1gHg1df-ia1gInGpoc0aIdVGOTYPS-GzA&s)">
           <p>Buy food</p>
         </button>
       </div>
