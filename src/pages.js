@@ -7,7 +7,7 @@ export function intro () {
     </p>
     <br />
     <p>
-      Select one action each day to try to make the most coins. Don't run out of coins or energy.
+      Select one action each day to try to make the most coins. <span style="background-color: rgba(255, 255, 0, 0.5)">Don't run out of coins or energy.</span>
     </p>
     <br />
     <div>
@@ -36,7 +36,6 @@ export function intro () {
 
 export function home () {
   return `
-    <h2> Home </h2>
     <div class = "option-section">
       <h3>Build Skills</h3>
       <div class = "option-row">
@@ -60,7 +59,6 @@ export function home () {
         </button>
       </div>
     </div>
-    <br/>
     <div class = "option-section">
       <h3>Work</h3>
       <div class = "option-row">
@@ -156,18 +154,20 @@ export function home () {
       }
       .home .option-row {
         display: flex;
-        gap: 1vw;
+        gap: 0.5vw;
         flex-wrap: wrap;
+        border-bottom: 2px dotted var(--accent-color);
+        padding-bottom: 5px;
       }
       .home .option-box {
         display: flex;
         align-items: end;
         justify-content: center;
-        width: clamp(200px, 15vw, 300px);
+        width: clamp(185px, 10vw, 300px);
         aspect-ratio: 2/1;
         background-color: white;
         background-size: cover;
-        margin: 5px;
+        margin: 0px 5px;
         padding: 2px;
         border-radius: 6px;
         
@@ -177,7 +177,7 @@ export function home () {
         color: white;
         padding: 2px;
         border-radius: 5px;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
       }
     </style>
     

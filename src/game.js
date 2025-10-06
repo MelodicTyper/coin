@@ -9,7 +9,7 @@ const energyElement = document.querySelector("#currentEnergy")
 
 
 window.state = {
-  position: "home",
+  position: "intro",
   coins: 1,
   day: 1,
 }
@@ -17,8 +17,8 @@ window.state = {
 window.stats = {
   energy: 100,
   skill: 25,
-  charisma: 25,
-  luck: 25,
+  charisma: 40,
+  luck: 40,
 }
 
 window.inventory = [];
@@ -73,7 +73,7 @@ function takeAction (actionElement) {
   console.log(action)
   changePage("action")
   const actionText = document.querySelector("#actionText")
-  
+  let result;
   
   
   switch (action) {
@@ -98,7 +98,21 @@ function takeAction (actionElement) {
     case "GO TO JOB":
       if (attributes.includes("job")) {
         
-        actionText.textContent = "You work hard, earn minimum wage, and go home tired but with slightly more money"
+        actionText.textContent = "You work hard, earn minimum wage, and go home tired but with slightly more money. ";
+        result = helper.generateRandom(0, 100);
+        if (result < 5) {
+          actionText.textContent += "Layoffs hit your company, and you end up losing your job."
+          attributes.splice(attributes.indexOf("job"), 1)
+          stats.luck += 15; // Good luck for your next job.
+        } else if( 15 > result >=5) {
+          actionText.textContent += "Your coworker ends up giving you the flu, and you have to stay at home for the next few days."
+          stats.energy += 20
+          days += 3
+        } else if(25 > result >= 15) {
+          actionText.textContent += "Your coworker has a birthday, and you're obligated to contribute to the Party Planning Commite"
+          stats.energy -= 5;
+          state.coins -= 20;
+        }
         stats.energy -= 15;
         state.coins += 1 + Math.floor(10 * (1 + stats.skill/10));
       } else {
@@ -122,9 +136,15 @@ function takeAction (actionElement) {
       break;
     case "WASH CAR WINDOWS":
       let profit =  1 + helper.generateRandom(0, 5)
-      actionText.textContent = "You wash car windows, and accept tips from people. It's very tiring, and the tips aren't reliable. Today you made " + profit + " coins!"
+      actionText.textContent = "You wash car windows, and accept tips from people. It's very tiring, and the tips aren't reliable. Today you made " + profit + " coins! "
       state.coins += profit
-      stats.energy -= 25;
+      stats.energy -= 10;
+      result = helper.generateRandom(0, 100);
+      if (result < 10) {
+        actionText.textContent += "Someone also gave you a very large tip of 30 coins!"
+        stats.luck += 5;
+        state.coins += 30
+      }
       break;
     case "MOW LAWNS":
       actionText.textContent = "You go door to door asking to mow lawns. "
@@ -139,6 +159,7 @@ function takeAction (actionElement) {
         attributes.push("allergies")
         stats.energy -= 20;
         stats.luck -= 5;
+        state.coins += 7;
       } else {
         actionText.textContent += "Nobody wants their lawn mowed by a stranger, so you go home with no money."
         stats.energy -= 10;
@@ -165,13 +186,19 @@ function takeAction (actionElement) {
       break;
     case "GO TO LIBRARY":
       actionText.textContent = "You go to the library, and gain valuable knowledge. You feel more rested."
+      result = helper.generateRandom(0, 100);
+      if (result < 5) {
+        
+      }
+      
       stats.energy += 5;
-      stats.skill += 5;
+      stats.skill += 3;
+      stats.charisma -= 1;
       break;
     case "ATTEND FREE LESSON":
       actionText.textContent = "You attend a lesson, and learn valuable skills. You also connect with other people."
       stats.energy -= 10;
-      stats.skill += 2;
+      stats.skill += 10;
       stats.charisma += 5
       break;
     case "RESEARCH ON THE INTERNET":
