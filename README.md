@@ -29,4 +29,4 @@ This project has only been tested on Chrome, and is functional on my mobile and 
 I do not own any of the images in this website, and I believe all images used are under the Creative Commons Liscence according to Google Search.
 
 ## AI Usage
-I've found AI robs me of the joy of writing code, so for this project that was for fun, AI wrote 0 lines of code. I used it to help generate some ideas for actions in the game. 
+I've found AI robs me of the joy of writing code, so for this project that was for fun, AI wrote 0 lines of code. I used it to help generate some ideas for actions in the game, and it helped with the config files for vercel and vite.
