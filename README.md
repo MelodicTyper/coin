@@ -1,7 +1,11 @@
 # Coin
 How much can you earn in one month if you start with one coin? Go through this risky adventure game to see how much you can make... before your rent is due.
 
+<img width="937" height="1143" alt="image" src="https://github.com/user-attachments/assets/5d22b109-63d6-439d-a970-ab8e53c0aa51" />
+
 Each day, take an action. Depending on your prior actions and luck, you'll make different amounts of money. 
+
+<img width="943" height="1027" alt="image" src="https://github.com/user-attachments/assets/797b6e6a-516e-444d-8584-30252d04fad2" />
 
 This game was inspired by a video from a long while back about surviving on small amounts of money. With the theme of Coins from Siege, I decided to simplify it and just go for Coin.
 
