@@ -23,7 +23,7 @@ window.stats = {
 
 window.inventory = [];
 window.attributes = [];
-window.possibleItems = ["Metal Detector", "Magnet", "Vintage Record", "Guitar", "Mask", "4 Leaf Clover", "Fishing Rod", "Old Treasure Map", "Harmonica", "Camera"]
+window.possibleItems = ["Metal Detector", "Magnet", "Vintage Record", "Guitar", "Mask", "4 Leaf Clover", "Fishing Rod", "Old Treasure Map", "Harmonica", "Vintage Camera"]
 
 function game() {
   coinElement.textContent = state.coins;
@@ -140,7 +140,7 @@ function takeAction (actionElement) {
       state.coins += profit
       stats.energy -= 10;
       result = helper.generateRandom(0, 100);
-      if (result < 10) {
+      if (result < 15) {
         actionText.textContent += "Someone also gave you a very large tip of 30 coins!"
         stats.luck += 5;
         state.coins += 30
@@ -185,10 +185,11 @@ function takeAction (actionElement) {
       }
       break;
     case "GO TO LIBRARY":
-      actionText.textContent = "You go to the library, and gain valuable knowledge. You feel more rested."
+      actionText.textContent = "You go to the library, and gain valuable knowledge. You feel more rested. "
       result = helper.generateRandom(0, 100);
-      if (result < 5) {
-        
+      if (result < 15) {
+        actionText.textContent += "So rested, that you fall asleep at the library! You wake up the next morning still at the library. "
+        day++;
       }
       
       stats.energy += 5;
@@ -202,10 +203,22 @@ function takeAction (actionElement) {
       stats.charisma += 5
       break;
     case "RESEARCH ON THE INTERNET":
-      actionText.textContent = "You look on the internet for knowledge, and you find too much of it. It's exausting, but you do now a lot more now."
+      actionText.textContent = "You look on the internet for knowledge, and you find too much of it. It's exausting, but you do know a lot more now. "
       stats.energy -= 10;
-      stats.skill += 7;
-      stats.charisma -= 10; // touch grass yall
+      stats.skill += 15;
+      stats.charisma -= 5; // touch grass yall
+      result = helper.generateRandom(0, 100);
+      if (result < 15) {
+        actionText.textContent += "While surfing da web, you accidently install a virus. They make you pay money to get your computer back :("
+        state.coins -= 15;
+        stats.energy -= 15;
+      } else if (30 > result > 15) {
+        actionText.textContent += "You end up doomscrolling TikTok late into the night, and you sleep in till 3pm the next day!"
+        day++;
+      } else if(40 > result > 30) {
+        actionText.textContent += "You end up finding a website that gives you significant knowledge!"
+        stats.skill += 25; // ya found youtube
+      }
       break;
     case "GO TO COMMUNITY EVENT":
       actionText.textContent = "You go out to the farmers market, and you enjoy all the people. You do spend a bit of money, however."
@@ -274,7 +287,7 @@ function takeAction (actionElement) {
     case "INVEST IN BITCOIN":
       if(attributes.includes("bitcoiner")) {
         actionText.textContent = "You check back on your bitcoin. "
-        if(helper.chance(stats.luck-50)) {
+        if(helper.chance(stats.luck-20)) {
           actionText.textContent += "Turns out, you made a fortune! You cash out, and call it a day. Maybe you should invest more?"
           stats.luck -= 50; // You really shouldn't invest more
           stats.charisma -= 50; // Is it worth the sacrifise?
@@ -505,8 +518,12 @@ function takeAction (actionElement) {
           inventory.push(el.textContent)
           possibleItems.splice(possibleItems.indexOf(el.textContent), 1)
           actionText.textContent = "You bought " + el.textContent + " for 10 coins!"
-          if(el.textContent == "4 Leaf Clover") {
+          if (el.textContent == "4 Leaf Clover") {
             stats.luck += 100;
+          } else if (el.textContent == "Vintage Record" || "Mask") {
+            stats.energy += 20;
+          } else if (el.textContent == "Camera") {
+            stats.skill += 15;
           }
           state.coins -= 10;
         })
@@ -515,13 +532,17 @@ function takeAction (actionElement) {
       case "GO THRIFTING":
         let titems = [possibleItems[helper.generateRandom(0, possibleItems.length-1)],possibleItems[helper.generateRandom(0, possibleItems.length-1)],possibleItems[helper.generateRandom(0, possibleItems.length-1)]]
         actionText.innerHTML = `You have a few things you find, all costing 5 coins. What will you buy? <div><button id = "buy">${titems[0]}</button><button id = "buy">${titems[1]}</button></div>`
-        document.querySelectorAll("button#buy").forEach((el) => {
-          el.addEventListener("click", () => {
+      document.querySelectorAll("button#buy").forEach((el) => {
+        el.addEventListener("click", () => {
             inventory.push(el.textContent)
             possibleItems.splice(possibleItems.indexOf(el.textContent), 1)
             actionText.textContent = "You bought " + el.textContent + " for 5 coins!"
-            if(el.textContent == "4 Leaf Clover") {
+            if (el.textContent == "4 Leaf Clover") {
               stats.luck += 100;
+            } else if (el.textContent == "Vintage Record" || "Mask") {
+              stats.energy += 20;
+            } else if (el.textContent == "Camera") {
+              stats.skill += 15;
             }
             state.coins -= 5;
           })
