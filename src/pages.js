@@ -37,30 +37,6 @@ export function intro () {
 export function home () {
   return `
     <h2> Home </h2>
-    <br/>
-    <div class = "option-section">
-      <h3>Work</h3>
-      <div class = "option-row">
-        <button class = "option-box" style="background-image:url(https://live.staticflickr.com/7037/14110060693_e2e54aef56_b.jpg)">
-          <p>Find a job</p>
-        </button>
-        <button class = "option-box" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGBnehOzCo7jcnVvoqPpx7Z0ACz2exRx7eWg&s)">
-          <p>Go to job</p>
-        </button>
-        <button class = "option-box" style="background-image:url(https://jandgtransmissions.com/wp-content/uploads/2019/09/Break-in-var-1024x680.jpg)">
-          <p>Wash car windows</p>
-        </button>
-        <button class = "option-box" style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/e/e1/Taromatas.jpg)">
-          <p>TODO</p>
-        </button>
-        <button class = "option-box" style="background-image:url(https://www.nicenstripy.com/ckfinder/userfiles/images/blog/large-lawn-with-stripes.jpg)">
-          <p>Mow Lawns</p>
-        </button>
-        <button class = "option-box" style="background-image:url(https://ottocar.co.uk/wp-content/uploads/2022/05/shutterstock_1497227390-1024x678-QaE42RbG_2000.jpeg.webp)">
-          <p>Drive uber</p>
-        </button>
-      </div>
-    </div>
     <div class = "option-section">
       <h3>Build Skills</h3>
       <div class = "option-row">
@@ -84,6 +60,31 @@ export function home () {
         </button>
       </div>
     </div>
+    <br/>
+    <div class = "option-section">
+      <h3>Work</h3>
+      <div class = "option-row">
+        <button class = "option-box" style="background-image:url(https://live.staticflickr.com/7037/14110060693_e2e54aef56_b.jpg)">
+          <p>Find a job</p>
+        </button>
+        <button class = "option-box" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGBnehOzCo7jcnVvoqPpx7Z0ACz2exRx7eWg&s)">
+          <p>Go to job</p>
+        </button>
+        <button class = "option-box" style="background-image:url(https://dmablaw.com/wp-content/uploads/2025/02/40100.webp)">
+          <p>Ask for a raise from job</p>
+        </button>
+        <button class = "option-box" style="background-image:url(https://jandgtransmissions.com/wp-content/uploads/2019/09/Break-in-var-1024x680.jpg)">
+          <p>Wash car windows</p>
+        </button>
+        <button class = "option-box" style="background-image:url(https://www.nicenstripy.com/ckfinder/userfiles/images/blog/large-lawn-with-stripes.jpg)">
+          <p>Mow Lawns</p>
+        </button>
+        <button class = "option-box" style="background-image:url(https://ottocar.co.uk/wp-content/uploads/2022/05/shutterstock_1497227390-1024x678-QaE42RbG_2000.jpeg.webp)">
+          <p>Drive uber</p>
+        </button>
+      </div>
+    </div>
+    
     <div class = "option-section">
       <h3>Luck</h3>
       <div class = "option-row">
@@ -102,7 +103,9 @@ export function home () {
         <button class = "option-box" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo9ahk-SA6iYeuOLmjuqi8dy2Z6jl-aXSgKg&s)">
           <p>Go magnet fishing</p>
         </button>
-        
+        <button class = "option-box" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo9ahk-SA6iYeuOLmjuqi8dy2Z6jl-aXSgKg&s)">
+          <p>Go fish fishing</p>
+        </button>
       </div>
     </div>
     <div class = "option-section">
@@ -204,7 +207,62 @@ export function action () {
 }
 
 export function end () {
+  let reasonEnded = ""
+  let lol = ""
+  let endMoney = ""
+  if(state.day > 30) {
+    reasonEnded = "You completed the month!"
+    lol = "Did you make any money?"
+  }
+  if(stats.energy < 0) {
+    reasonEnded = "You ran out of energy and had to recover the rest of the month."
+    lol = "Burn out is not good"
+  }
+  if (state.coins < 0) {
+    reasonEnded = "You ran out of money."
+    lol = "Remember you're trying to earn money?"
+    endMoney = "I don't think banks accept negative coins as currency. "
+  }
+  let incomeTax = "Income Tax: " + (state.coins - 222);
+  if (state.coins-223 < 0) {
+    incomeTax = ""
+  }
   return `
-  ya lose
+  <h2>${reasonEnded}</h2>
+  <br/>
+  <p> ${lol}</p>
+  <br />
+  
+  <p>You had ${state.coins} coins left before all your payments. ${endMoney}</p>
+  <br />
+  <p> Your payments were: </p>
+  <ul>
+    <li>Rent: 100 coins</li>
+    <li>Insurance: 50 coins</li>
+    <li>Food: 50 coins</li>
+    <li>Subscriptions: 21 coins</li>
+    
+  </ul>
+  <p>You had ${state.coins-221} after payments.</p>
+  
+  <p>${incomeTax}</p>
+  <br />
+  ${state.coins>221 ? "<p>You ended the month with 1 coin.</p>" : "<p>You ended the month in debt</p>"}
+  <br />
+  <p>Maybe you could make money next month if you're smart enough?</p>
+  <br />
+  <br />
+  <a href="/">Play again?</a>
+  
+  <style>
+    a {
+      font-size: 2rem;
+      text-decoration:none;
+      color: black;
+      border: 1px solid black;
+    }
+    
+  </style>
+  
   `
 }

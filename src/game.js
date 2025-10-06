@@ -8,7 +8,7 @@ const energyElement = document.querySelector("#currentEnergy")
 
 
 
-let state = {
+window.state = {
   position: "home",
   coins: 1,
   day: 1,
@@ -25,19 +25,18 @@ window.inventory = [];
 window.attributes = [];
 window.possibleItems = ["Metal Detector", "Magnet", "Vintage Record", "Guitar", "Mask", "4 Leaf Clover", "Fishing Rod", "Old Treasure Map", "Harmonica", "Camera"]
 
-function game () {
+function game() {
   coinElement.textContent = state.coins;
   dayElement.textContent = state.day;
   energyElement.textContent = stats.energy
-  
+  console.log(state.position)
   switch (state.position) {
     case "intro":
       contentElement.className = "intro"
       contentElement.innerHTML = pages.intro()
       break;
     case "home":
-      if (stats.energy < 0) {
-        alert('h8i')
+      if (stats.energy < 0 || state.coins < 0 || state.day > 30) {
         changePage("end")
         break;
       }
@@ -58,6 +57,7 @@ function game () {
     case "end":
       contentElement.className = "end"
       contentElement.innerHTML = pages.end();
+      break;
   }
 }
 
@@ -106,6 +106,15 @@ function takeAction (actionElement) {
         
         stats.energy -= 5;
       }
+      break;
+    case "ASK FOR A RAISE FROM JOB":
+      state.day--; 
+      if (attributes.includes("job")) {
+        actionText.textContent = "No." // not in this economy
+      } else {
+        actionText.textContent = "What job?"
+      }
+      
       break;
     case "WASH CAR WINDOWS":
       let profit =  1 + helper.generateRandom(0, 5)
@@ -169,6 +178,10 @@ function takeAction (actionElement) {
       break;
     case "GO TO COMMUNITY EVENT":
       actionText.textContent = "You go out to the farmers market, and you enjoy all the people. You do spend a bit of money, however."
+      if(inventory.includes("Guitar") || inventory.includes("Harmonica")) {
+        actionText.textContent = "You go to a farmers market, and you start playing one of your instruments. People are kind and tip you well!"
+        state.coins += Math.floor(stats.skill / 10)
+      }
       stats.energy -= 5;
       stats.skill += 1;
       stats.charisma += 15;
@@ -281,6 +294,27 @@ function takeAction (actionElement) {
           stats.energy -= 20;
         }
       break;
+      case "GO FISH FISHING":
+          if(inventory.includes("Fishing Rod")) {
+            actionText.textContent = "You start fishing, and find a few things. "
+            if(helper.chance(stats.luck +10)) {
+              actionText.textContent += "You caught enough fish for tonight's dinner, and some extra to sell! "
+              stats.energy += 10;
+              state.coins += 15;
+              stats.charisma -= 5;
+              stats.luck += 1;
+            } else {
+              actionText.textContent += "All the fish is small, and you barely feel full. "
+              stats.energy -= 5;
+              stats.charisma -= 5;
+              stats.luck += 5;
+            }
+            
+          } else {
+            actionText.textContent = "You try fishing with your hands. That didn't go well."
+            stats.energy -= 10;
+          }
+        break;
       // Here's where the fun begins
     case "PICKPOCKET SOMEONE":
       if(stats.skill > helper.generateRandom(0, 50)) {
@@ -404,18 +438,24 @@ function takeAction (actionElement) {
           inventory.push(el.textContent)
           possibleItems.splice(possibleItems.indexOf(el.textContent), 1)
           actionText.textContent = "You bought " + el.textContent + " for 10 coins!"
+          if(el.textContent == "4 Leaf Clover") {
+            stats.luck += 100;
+          }
           state.coins -= 10;
         })
       })
       break;
       case "GO THRIFTING":
-        let titems = [possibleItems[helper.generateRandom(0, possibleItems.length-1)],possibleItems[helper.generateRandom(0, possibleItems.length)],possibleItems[helper.generateRandom(0, possibleItems.length)]]
+        let titems = [possibleItems[helper.generateRandom(0, possibleItems.length-1)],possibleItems[helper.generateRandom(0, possibleItems.length-1)],possibleItems[helper.generateRandom(0, possibleItems.length-1)]]
         actionText.innerHTML = `You have a few things you find, all costing 5 coins: <div><button id = "buy">${titems[0]}</button><button id = "buy">${titems[1]}</button></div>`
         document.querySelectorAll("button#buy").forEach((el) => {
           el.addEventListener("click", () => {
             inventory.push(el.textContent)
             possibleItems.splice(possibleItems.indexOf(el.textContent), 1)
             actionText.textContent = "You bought " + el.textContent + " for 5 coins!"
+            if(el.textContent == "4 Leaf Clover") {
+              stats.luck += 100;
+            }
             state.coins -= 5;
           })
         })

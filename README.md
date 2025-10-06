@@ -8,7 +8,9 @@ It's been a while since I've programmed. I started out on Khan Academy's html sa
 
 This is a pretty simple game, but I enjoyed the CSS designing and the game logic.
 
-The code organization is practically non existant. But it works
+The code organization is practically non existant. But it works so.
+
+Made for Hackclub's Siege hackathon.
 
 ## Credits
 - MDN Web Docs
