@@ -9,7 +9,7 @@ const energyElement = document.querySelector("#currentEnergy")
 
 
 window.state = {
-  position: "intro",
+  position: "home",
   coins: 1,
   day: 1,
 }
@@ -68,6 +68,9 @@ function changePage (page) {
 
 window.changePage = changePage; // Make this accessible to onclick events
 
+
+
+
 function takeAction (actionElement) {
   let action = actionElement.textContent.trim().toUpperCase()
   console.log(action)
@@ -104,17 +107,17 @@ function takeAction (actionElement) {
           actionText.textContent += "Layoffs hit your company, and you end up losing your job."
           attributes.splice(attributes.indexOf("job"), 1)
           stats.luck += 15; // Good luck for your next job.
-        } else if( 15 > result >=5) {
+        } else if (15 > result && result >= 5) {
           actionText.textContent += "Your coworker ends up giving you the flu, and you have to stay at home for the next few days."
           stats.energy += 20
-          days += 3
-        } else if(25 > result >= 15) {
+          state.days += 3
+        } else if (25 > result && result >= 15) {
           actionText.textContent += "Your coworker has a birthday, and you're obligated to contribute to the Party Planning Commite"
           stats.energy -= 5;
           state.coins -= 20;
         }
         stats.energy -= 15;
-        state.coins += 1 + Math.floor(10 * (1 + stats.skill/10));
+        state.coins += 1 + Math.floor(10 * (1 + stats.skill / 10));
       } else {
         actionText.textContent = "You walk to the bus, take the bus to the city, walk around to your workplace - workplace??? You realize you don't even have a job, and you wasted an entire day going to your nonexistant job."
         
@@ -122,10 +125,10 @@ function takeAction (actionElement) {
       }
       break;
     case "ASK FOR A RAISE FROM JOB":
-      state.day--; 
+      state.day--;
       if (attributes.includes("job")) {
         actionText.textContent = "No." // not in this economy
-        if(helper.chance(30)) {
+        if (helper.chance(30)) {
           actionText.textContent += "Actually, we want people who are team players, and you don't seem to fit in with out team culture. We're going have to part ways. (aka you lost your job)"
           attributes.splice(attributes.indexOf("job"), 1)
         }
@@ -135,7 +138,7 @@ function takeAction (actionElement) {
       
       break;
     case "WASH CAR WINDOWS":
-      let profit =  1 + helper.generateRandom(0, 5)
+      let profit = 1 + helper.generateRandom(0, 5)
       actionText.textContent = "You wash car windows, and accept tips from people. It's very tiring, and the tips aren't reliable. Today you made " + profit + " coins! "
       state.coins += profit
       stats.energy -= 10;
@@ -189,7 +192,7 @@ function takeAction (actionElement) {
       result = helper.generateRandom(0, 100);
       if (result < 15) {
         actionText.textContent += "So rested, that you fall asleep at the library! You wake up the next morning still at the library. "
-        day++;
+        state.day++;
       }
       
       stats.energy += 5;
@@ -212,17 +215,17 @@ function takeAction (actionElement) {
         actionText.textContent += "While surfing da web, you accidently install a virus. They make you pay money to get your computer back :("
         state.coins -= 15;
         stats.energy -= 15;
-      } else if (30 > result > 15) {
+      } else if (30 > result && result > 15) {
         actionText.textContent += "You end up doomscrolling TikTok late into the night, and you sleep in till 3pm the next day!"
         day++;
-      } else if(40 > result > 30) {
+      } else if (40 > result && result > 30) {
         actionText.textContent += "You end up finding a website that gives you significant knowledge!"
         stats.skill += 25; // ya found youtube
       }
       break;
     case "GO TO COMMUNITY EVENT":
       actionText.textContent = "You go out to the farmers market, and you enjoy all the people. You do spend a bit of money, however."
-      if(inventory.includes("Guitar") || inventory.includes("Harmonica")) {
+      if (inventory.includes("Guitar") || inventory.includes("Harmonica")) {
         actionText.textContent = "You go to a farmers market, and you start playing one of your instruments. People are kind and tip you well!"
         state.coins += Math.floor(stats.skill / 10)
       }
@@ -245,49 +248,57 @@ function takeAction (actionElement) {
       stats.energy -= 20;
       stats.skill += 1;
       stats.charisma += 10;
+      if (attributes.includes("Life Coach")) {
+        stats.energy += 10;
+        stats.skill += 5;
+      }
       break;
     case "WISHING WELL":
       actionText.textContent = "You drop a few of your coins down the wishing well. You feel more lucky... and also wish you had your coins back."
       stats.energy -= 2;
-      stats.luck += 5 + helper.generateRandom(0, 15);
+      stats.luck += 5 + helper.generateRandom(0, 25);
       state.coins -= 5;
+      if(helper.chance(20)) {
+        actionText.textContent += "After a long fall, you hear a \"OW! MY HEAD\" from the bottom from the well. \"CURSE YOU\" you hear, as you run away. Oops..."
+        stats.luck -= 30;
+      }
       break;
     case "GAMBLE":
       actionText.innerHTML = "<p>You start gambling you coins, and before you know it, you have a straight. Someone else goes all in - will you?</p> <button id='choice'>Yes</button> <button id='choice'>No</button"
       document.querySelector("#backToHome").style.display = "none"
       document.querySelectorAll("button#choice").forEach((el) => {
         el.addEventListener("click", () => {
-        document.querySelector("#backToHome").style.display = "block"
-         if (el.textContent == "Yes") {
-           if (helper.chance(stats.luck + 10)) {
-             actionText.textContent = "You win the hand! You take your winnings and leave with twice your money."
-             stats.energy -= 5;
-             stats.charisma -= 5;
-             stats.skill -= 5;
-             stats.luck -= 50; // Better not win again
-             state.coins = state.coins * 2;
-           } else {
-             actionText.textContent = "You lose to a flush, that flushes all your money away. Oof."
-             stats.energy -= 5;
-             stats.luck += 20; // Better luck next time
-             state.coins = 0;
-           }
-         } else {
-           actionText.textContent = "You fold, losing some of your money. You leave, sad."
-           stats.energy -= 10;
-           stats.charisma -= 5;
-           stats.skill -= 5;
-           state.coins -= 10;
-         }
+          document.querySelector("#backToHome").style.display = "block"
+          if (el.textContent == "Yes") {
+            if (helper.chance(stats.luck + 10)) {
+              actionText.textContent = "You win the hand! You take your winnings and leave with twice your money."
+              stats.energy -= 5;
+              stats.charisma -= 5;
+              stats.skill -= 5;
+              stats.luck -= 50; // Better not win again
+              state.coins = state.coins * 2;
+            } else {
+              actionText.textContent = "You lose to a flush, that flushes all your money away. Oof."
+              stats.energy -= 5;
+              stats.luck += 20; // Better luck next time
+              state.coins = 0;
+            }
+          } else {
+            actionText.textContent = "You fold, losing some of your money. You leave, sad."
+            stats.energy -= 10;
+            stats.charisma -= 5;
+            stats.skill -= 5;
+            state.coins -= 10;
+          }
         })
       })
       
       
       break;
     case "INVEST IN BITCOIN":
-      if(attributes.includes("bitcoiner")) {
+      if (attributes.includes("bitcoiner")) {
         actionText.textContent = "You check back on your bitcoin. "
-        if(helper.chance(stats.luck-20)) {
+        if (helper.chance(stats.luck - 20)) {
           actionText.textContent += "Turns out, you made a fortune! You cash out, and call it a day. Maybe you should invest more?"
           stats.luck -= 50; // You really shouldn't invest more
           stats.charisma -= 50; // Is it worth the sacrifise?
@@ -303,11 +314,11 @@ function takeAction (actionElement) {
         attributes.push("bitcoiner")
         state.energy -= 5;
       }
-        break;
+      break;
     case "GO METAL DETECTING":
-      if(inventory.includes("Metal Detector")) {
+      if (inventory.includes("Metal Detector")) {
         actionText.textContent = "You go out metal detecting, and dig up a few signals. "
-        if(helper.chance(stats.luck +10)) {
+        if (helper.chance(stats.luck + 10)) {
           actionText.textContent += "You find some small coins - one of them is even silver! "
           stats.energy -= 10;
           state.coins += 15;
@@ -319,8 +330,8 @@ function takeAction (actionElement) {
           stats.charisma -= 5;
           stats.luck += 2;
         }
-        if(helper.chance(2)) {
-          actionText.textContent  += "But then you find one more hole. It's a good signal, and as you dig it out, you see a small hint of gold. YOU FOUND GOLD!"
+        if (helper.chance(2)) {
+          actionText.textContent += "But then you find one more hole. It's a good signal, and as you dig it out, you see a small hint of gold. YOU FOUND GOLD!"
           stats.luck += 10;
           stats.energy -= 10;
           stats.charisma += 5;
@@ -331,8 +342,8 @@ function takeAction (actionElement) {
         state.day--; // You get to keep the day
         stats.luck -= 5; // Slight bad luck
         stats.energy -= 5;
-        if(helper.chance(2)) {
-          actionText.textContent  += "You stumble upon a small glint on the street walking home, and as you pick it up, you found a small coin!"
+        if (helper.chance(2)) {
+          actionText.textContent += "You stumble upon a small glint on the street walking home, and as you pick it up, you found a small coin!"
           stats.luck += 50;
           stats.charisma += 5;
           state.coins += 1;
@@ -340,51 +351,115 @@ function takeAction (actionElement) {
       }
       break;
     case "GO MAGNET FISHING":
-        if(inventory.includes("Magnet")) {
-          actionText.textContent = "You go out magnetic fishing, and pull up a few things. "
-          if(helper.chance(stats.luck +10)) {
-            actionText.textContent += "You find some small coins - one of them is even silver! "
-            stats.energy -= 10;
-            state.coins += 15;
-            stats.charisma -= 5;
-            stats.luck += 2;
-          } else {
-            actionText.textContent += "Just scrap metal "
-            stats.energy -= 10;
-            stats.charisma -= 5;
-            stats.luck += 2;
-          }
-          if(helper.chance(2)) {
-            actionText.textContent  += "But you also pull up something small and metal, and it's roundish. Looks like... A GRENADE! And it goes off. Oof."
-            stats.energy -= 200;
-          }
+      if (inventory.includes("Magnet")) {
+        actionText.textContent = "You go out magnetic fishing, and pull up a few things. "
+        if (helper.chance(stats.luck + 10)) {
+          actionText.textContent += "You find some small coins - one of them is even silver! "
+          stats.energy -= 10;
+          state.coins += 15;
+          stats.charisma -= 5;
+          stats.luck += 2;
         } else {
-          actionText.textContent = "You go out magnet fishing, but you realize you don't own a magnet. You go out into the water, and try to swim around and find things, but to no avail. You're exausted."
-          stats.energy -= 20;
+          actionText.textContent += "Just scrap metal "
+          stats.energy -= 10;
+          stats.charisma -= 5;
+          stats.luck += 2;
         }
+        if (helper.chance(2)) {
+          actionText.textContent += "But you also pull up something small and metal, and it's roundish. Looks like... A GRENADE! And it goes off. Oof."
+          stats.energy -= 200;
+        }
+      } else {
+        actionText.textContent = "You go out magnet fishing, but you realize you don't own a magnet. You go out into the water, and try to swim around and find things, but to no avail. You're exausted."
+        stats.energy -= 20;
+      }
       break;
-      case "GO FISH FISHING":
-          if(inventory.includes("Fishing Rod")) {
-            actionText.textContent = "You start fishing, and find a few things. "
-            if(helper.chance(stats.luck +10)) {
-              actionText.textContent += "You caught enough fish for tonight's dinner, and some extra to sell! "
-              stats.energy += 10;
-              state.coins += 15;
-              stats.charisma -= 5;
-              stats.luck += 1;
-            } else {
-              actionText.textContent += "All the fish is small, and you barely feel full. "
-              stats.energy -= 5;
-              stats.charisma -= 5;
-              stats.luck += 5;
-            }
-            
-          } else {
-            actionText.textContent = "You try fishing with your hands. That didn't go well."
-            stats.energy -= 10;
-          }
-        break;
-      // Here's where the fun begins
+    case "GO FISH FISHING":
+      if (inventory.includes("Fishing Rod")) {
+        actionText.textContent = "You start fishing, and find a few things. "
+        if (helper.chance(stats.luck + 10)) {
+          actionText.textContent += "You caught enough fish for tonight's dinner, and some extra to sell! "
+          stats.energy += 10;
+          state.coins += 15;
+          stats.charisma -= 5;
+          stats.luck += 1;
+        } else {
+          actionText.textContent += "All the fish is small, and you barely feel full. "
+          stats.energy -= 5;
+          stats.charisma -= 5;
+          stats.luck += 5;
+        }
+          
+      } else {
+        actionText.textContent = "You try fishing with your hands. That didn't go well."
+        stats.energy -= 10;
+      }
+      break;
+    case "JUST WALK AROUND THE CITY":
+      actionText.textContent = "You go into the city. "
+      result = helper.generateRandom(0, 100);
+      console.log(result)
+      if (result < 25) {
+        actionText.textContent += "You walk around all day. Nice."
+        stats.energy -= 15;
+      } else if (30 > result && result > 25) {
+        actionText.textContent += "You walk around all day, and you end up walking into a pole."
+        stats.energy -= 25;
+      } else if (40 > result && result > 30) {
+        actionText.textContent += "You find some coins on the ground while walking around. Cool."
+        state.coins += 10;
+        stats.energy -= 10;
+      } else if (50 > result && result > 40) {
+        actionText.textContent += "You end up finding a strange map on the ground. Cool?"
+        stats.energy -= 10;
+        inventory.push("Old Treasure Map")
+      } else if (60 > result && result > 50) {
+        actionText.textContent += "You soak up the sun all day, and you feel very refreshed."
+        stats.energy += 20;
+      } else if (70 > result && result > 60) {
+        actionText.textContent += "You end up walking with another person, and you have great conversations!"
+        stats.charisma += 20;
+        stats.energy -= 5;
+      } else if (85 > result && result > 70) {
+        actionText.textContent += "You over estimate how much you can walk, and end up being stranded. You have to walk home all night."
+        state.day++
+        stats.energy -= 20;
+      } else if (100 > result && result > 85) {
+        actionText.textContent += "You end up stumbling across a wallet, and it contains lots of coins! ...you keep it"
+        state.coins += 50;
+        stats.energy -= 10;
+        stats.charisma -= 10;
+      } else {
+        actionText.textContent = "You walk into the city, and then you walk back. Big woop"
+        stats.energy -= 5;
+      }
+      break;
+    case "BUY A LOTTERY TICKET":
+      result = helper.generateRandom(0, 100);
+      state.coins -= 5;
+      if (result < 20) {
+        actionText.textContent = "Waste of 5 coins"
+      } else if (result > 20 && result < 35) {
+        actionText.textContent = "You made back your 5 coins"
+        state.coins += 5;
+      } else if (result > 35 && result < 40) {
+        actionText.textContent = "YOU WON BIG"
+        state.coins += 100; // Yeah that's the biggest you get from the lotto
+      } else if (result > 40 && result < 60) {
+        actionText.textContent = "You got a good win!"
+        state.coins += 20;
+      } else if (result > 60 && result < 80) {
+        actionText.textContent = "You won a small amount"
+        state.coins += 7;
+      } else if (result > 80 && result < 100) {
+        actionText.textContent = "You won less than you spent..."
+        state.coins += 2;
+      } else {
+        actionText.textContent = "You end up buying multiple, and lose a lot of money."
+        state.coins -= 10;
+      }
+      break;
+    // Here's where the fun begins
     case "PICKPOCKET SOMEONE":
       if(stats.skill > helper.generateRandom(0, 50)) {
         actionText.textContent = "You successfully grab someone wallet without them noticing. You check to see what's inside. "
@@ -470,14 +545,15 @@ function takeAction (actionElement) {
       } else {
         let chosenItem = helper.generateRandom(0, inventory.length - 1)
         let chosenItemName = inventory[chosenItem]
-        actionText.textContent = `You sell off your ${chosenItemName}. `
+        actionText.textContent += `You sell off your ${chosenItemName}. `
         
-        if (helper.chance(charisma + 10)) {
+        if (helper.chance(stats.charisma + 10)) {
           actionText.textContent += "You sell the person on how valuable the item is, and you make a large profit!"
-          state.coins += 75;
+          state.coins += 50;
+          stats.charisma -= 20;
         } else {
           actionText.textContent += "They don't buy it, or how valuable the item is. You just wasted a bunch of time."
-          stats.energy -= 10;
+          stats.energy -= 20;
         }
       }
       break;

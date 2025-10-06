@@ -12,11 +12,13 @@ This game was inspired by a video from a long while back about surviving on smal
 ## Design
 It's been a while since I've programmed. I started out on Khan Academy's html sandbox, where I could program simple, plain vanilla HTML, CSS, and JS. As I've used more advanced frameworks like Svelte, I've found finishing projects more difficult. So, I went back to basics and used vanilla HTML, with the benefits of Vite for developement. 
 
-This is a pretty simple game, but I enjoyed the CSS designing and the game logic.
+This is a pretty simple game, but I enjoyed the CSS designing and the game logic. There's many small interactions, so expore the game to find all the cool things!
 
 The code organization is practically non existant. But it works so.
 
 Made for Hackclub's Siege hackathon.
+
+This project has only been tested on Chrome, and is functional on my mobile and desktop device. 
 
 ## Credits
 - MDN Web Docs

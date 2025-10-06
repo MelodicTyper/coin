@@ -1,3 +1,5 @@
+import * as helper from "/src/helper.js"
+
 export function intro () {
   return `
     <h2> Welcome! </h2>
@@ -101,8 +103,14 @@ export function home () {
         <button class = "option-box" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo9ahk-SA6iYeuOLmjuqi8dy2Z6jl-aXSgKg&s)">
           <p>Go magnet fishing</p>
         </button>
-        <button class = "option-box" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo9ahk-SA6iYeuOLmjuqi8dy2Z6jl-aXSgKg&s)">
+        <button class = "option-box" style="background-image:url(https://images.squarespace-cdn.com/content/v1/5b16ca69cef372b91b348fda/1615821999582-L30K5KH1ZYQFBWMZ3ZFZ/fullsizeoutput_d65.jpeg)">
           <p>Go fish fishing</p>
+        </button>
+        <button class = "option-box" style="background-image:url(https://freerangestock.com/sample/168594/busy-city-sidewalk-with-pedestrians.jpg)">
+          <p>Just walk around the city</p>
+        </button>
+        <button class = "option-box" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS168RfTiXXdGwjue5vbhn61M18yPpctB6vbQ&s)">
+          <p>Buy a lottery ticket</p>
         </button>
       </div>
     </div>
@@ -207,6 +215,14 @@ export function action () {
 }
 
 export function end () {
+  let tips = ["Build some skills before getting a job!", "Try using the wishing well before going for a lucky action.", "Questionable actions are risky, but can be very, very rewarding.", "You can use items to succeed in tasks like fishing or metal detecting", "It can be difficult to get a lucky action to hit twice...", "This game is open source, and reveals the internal mechanics to play the best game!"]
+  
+  let scores = [];
+  scores = JSON.parse(localStorage.getItem("scoresList")) || [] // Get the local top scores from localStorage
+  scores.push(state.coins) // Add our score
+  scores.sort((a,b) => b-a) // Sort greatest to least
+  localStorage.setItem("scoresList", JSON.stringify(scores)) // Add the new top score to the list and save it
+  
   let reasonEnded = ""
   let lol = ""
   let endMoney = ""
@@ -251,7 +267,14 @@ export function end () {
   <br />
   <p>Maybe you could make money next month if you're smart enough?</p>
   <br />
-  <p>Tip: Build some skills before getting a job! </p>
+  <p>Your top scores (before your payments):</p>
+  <p>1. ${scores[0] || 0}</p>
+  <p>2. ${scores[1] || 0}</p>
+  <p>3. ${scores[2] || 0}</p>
+  <p>4. ${scores[3] || 0}</p>
+  <p>5. ${scores[4] || 0}</p>
+  <br />
+  <p>Tip: ${tips[helper.generateRandom(0, tips.length-1)]}</p>
   <br />
   <a href="/">Play again?</a>
   
