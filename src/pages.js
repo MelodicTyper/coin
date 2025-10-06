@@ -215,6 +215,8 @@ export function action () {
 }
 
 export function end () {
+  document.querySelector("footer").style.display = "none"
+  
   let tips = ["Build some skills before getting a job!", "Try using the wishing well before going for a lucky action.", "Questionable actions are risky, but can be very, very rewarding.", "You can use items to succeed in tasks like fishing or metal detecting", "It can be difficult to get a lucky action to hit twice...", "This game is open source, and reveals the internal mechanics to play the best game!"]
   
   let scores = [];

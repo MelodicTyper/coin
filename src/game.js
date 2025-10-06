@@ -227,7 +227,7 @@ function takeAction (actionElement) {
       actionText.textContent = "You go out to the farmers market, and you enjoy all the people. You do spend a bit of money, however."
       if (inventory.includes("Guitar") || inventory.includes("Harmonica")) {
         actionText.textContent = "You go to a farmers market, and you start playing one of your instruments. People are kind and tip you well!"
-        state.coins += Math.floor(stats.skill / 10)
+        state.coins += 15 + Math.floor(stats.skill / 10)
       }
       stats.energy -= 5;
       stats.skill += 1;
