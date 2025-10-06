@@ -111,6 +111,10 @@ function takeAction (actionElement) {
       state.day--; 
       if (attributes.includes("job")) {
         actionText.textContent = "No." // not in this economy
+        if(helper.chance(30)) {
+          actionText.textContent += "Actually, we want people who are team players, and you don't seem to fit in with out team culture. We're going have to part ways. (aka you lost your job)"
+          attributes.splice(attributes.indexOf("job"), 1)
+        }
       } else {
         actionText.textContent = "What job?"
       }
@@ -187,6 +191,15 @@ function takeAction (actionElement) {
       stats.charisma += 15;
       state.coins -= 5;
       break;
+    case "HIRE LIFE COACH":
+      actionText.textContent = "You pay hourly for your advice, but it's very motivational. And expensive."
+      attributes.push("Life Coach")
+      stats.energy -= 10;
+      stats.charisma += 10;
+      stats.skill += 10;
+      stats.luck += 10;
+      state.coins -= 30;
+      break;
     case "VOLUNTEER":
       actionText.textContent = "You go out and volunteer in your community. You spend a lot of energy, make no money - but you create some great connections and help the community!"
       stats.energy -= 20;
@@ -200,20 +213,36 @@ function takeAction (actionElement) {
       state.coins -= 5;
       break;
     case "GAMBLE":
-      actionText.textContent = "You start gambling you coins, and before you know it, you've gone all in on a poker hand. A straight is pretty good, right? "
-      if (helper.chance(stats.luck + 10)) {
-        actionText.textContent += "You win the hand! You take your winnings and leave with twice your money."
-        stats.energy -= 5;
-        stats.charisma -= 5;
-        stats.skill -= 5;
-        stats.luck -= 50; // Better not win again
-        state.coins = state.coins * 2;
-      } else {
-        actionText.textContent += "You lose to a flush, that flushes all your money away. Oof."
-        stats.energy -= 5;
-        stats.luck += 20; // Better luck next time
-        state.coins = 0;
-      }
+      actionText.innerHTML = "<p>You start gambling you coins, and before you know it, you have a straight. Someone else goes all in - will you?</p> <button id='choice'>Yes</button> <button id='choice'>No</button"
+      document.querySelector("#backToHome").style.display = "none"
+      document.querySelectorAll("button#choice").forEach((el) => {
+        el.addEventListener("click", () => {
+        document.querySelector("#backToHome").style.display = "block"
+         if (el.textContent == "Yes") {
+           if (helper.chance(stats.luck + 10)) {
+             actionText.textContent = "You win the hand! You take your winnings and leave with twice your money."
+             stats.energy -= 5;
+             stats.charisma -= 5;
+             stats.skill -= 5;
+             stats.luck -= 50; // Better not win again
+             state.coins = state.coins * 2;
+           } else {
+             actionText.textContent = "You lose to a flush, that flushes all your money away. Oof."
+             stats.energy -= 5;
+             stats.luck += 20; // Better luck next time
+             state.coins = 0;
+           }
+         } else {
+           actionText.textContent = "You fold, losing some of your money. You leave, sad."
+           stats.energy -= 10;
+           stats.charisma -= 5;
+           stats.skill -= 5;
+           state.coins -= 10;
+         }
+        })
+      })
+      
+      
       break;
     case "INVEST IN BITCOIN":
       if(attributes.includes("bitcoiner")) {
@@ -412,6 +441,17 @@ function takeAction (actionElement) {
         }
       }
       break;
+    case "GO TREASURE HUNTING":
+      if(inventory.includes("Old Treasure Map") && helper.chance(stats.luck)) {
+        actionText.textContent = "YOU FOUND TREASURE!!"
+        stats.energy -= 10;
+        state.coins += 300;
+        stats.luck = stats.luck / 2;
+      } else {
+        actionText.textContent = "You didn't find anything, nor did you know where to look. Maybe the treasure was the friends you made along the way? But you didn't make any friends..."
+        stats.energy -= 15;
+      }
+      break;
     case "COUNTERFIT MONEY":
       actionText.textContent = "Wow, counterfitting money is difficult. You have the skills to do it... right? "
       if(stats.skill > 75) {
@@ -432,7 +472,7 @@ function takeAction (actionElement) {
       break;
     case "GO SHOPPING":
       let items = [possibleItems[helper.generateRandom(0, possibleItems.length-1)],possibleItems[helper.generateRandom(0, possibleItems.length)],possibleItems[helper.generateRandom(0, possibleItems.length)]]
-      actionText.innerHTML = `You have a few things you find, all costing 10 coins: <button id = "buy">${items[0]}</button><button id = "buy">${items[1]}</button><button id = "buy">${items[2]}</button>`
+      actionText.innerHTML = `You have a few things you find, all costing 10 coins. What will you buy? <button id = "buy">${items[0]}</button><button id = "buy">${items[1]}</button><button id = "buy">${items[2]}</button>`
       document.querySelectorAll("button#buy").forEach((el) => {
         el.addEventListener("click", () => {
           inventory.push(el.textContent)
@@ -447,7 +487,7 @@ function takeAction (actionElement) {
       break;
       case "GO THRIFTING":
         let titems = [possibleItems[helper.generateRandom(0, possibleItems.length-1)],possibleItems[helper.generateRandom(0, possibleItems.length-1)],possibleItems[helper.generateRandom(0, possibleItems.length-1)]]
-        actionText.innerHTML = `You have a few things you find, all costing 5 coins: <div><button id = "buy">${titems[0]}</button><button id = "buy">${titems[1]}</button></div>`
+        actionText.innerHTML = `You have a few things you find, all costing 5 coins. What will you buy? <div><button id = "buy">${titems[0]}</button><button id = "buy">${titems[1]}</button></div>`
         document.querySelectorAll("button#buy").forEach((el) => {
           el.addEventListener("click", () => {
             inventory.push(el.textContent)

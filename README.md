@@ -1,7 +1,9 @@
 # Coin
 How much can you earn in one month if you start with one coin? Go through this risky adventure game to see how much you can make... before your rent is due.
 
-Each day, take an action. Depending on your prior actions and luck, you'll have different results. 
+Each day, take an action. Depending on your prior actions and luck, you'll make different amounts of money. 
+
+This game was inspired by a video from a long while back about surviving on small amounts of money. With the theme of Coins from Siege, I decided to simplify it and just go for Coin.
 
 ## Design
 It's been a while since I've programmed. I started out on Khan Academy's html sandbox, where I could program simple, plain vanilla HTML, CSS, and JS. As I've used more advanced frameworks like Svelte, I've found finishing projects more difficult. So, I went back to basics and used vanilla HTML, with the benefits of Vite for developement. 

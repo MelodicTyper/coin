@@ -7,7 +7,7 @@ export function intro () {
     </p>
     <br />
     <p>
-      Select one action each day to try to make the most coins. Don't run out of coins!
+      Select one action each day to try to make the most coins. Don't run out of coins or energy.
     </p>
     <br />
     <div>
@@ -126,7 +126,9 @@ export function home () {
         <button class = "option-box" style="background-image:url(https://live.staticflickr.com/2089/2177283006_4ee1cc4186.jpg)">
           <p>Counterfit money</p>
         </button>
-        
+        <button class = "option-box" style="background-image:url(https://www.stockvault.net/data/2016/04/22/194933/preview16.jpg)">
+          <p>Go treasure hunting</p>
+        </button>
       </div>
     </div>
     <div class = "option-section">
@@ -178,9 +180,7 @@ export function home () {
         font-size: 1.1rem;
       }
     </style>
-    <script>
-      
-    </script>
+    
   `
 }
 
@@ -189,7 +189,7 @@ export function action () {
     <div id = "actionText">
       
     </div>
-    <button>Ok</button>
+    <button id="backToHome">Ok</button>
     <style>
       .action {
         display: flex;
@@ -251,6 +251,7 @@ export function end () {
   <br />
   <p>Maybe you could make money next month if you're smart enough?</p>
   <br />
+  <p>Tip: Build some skills before getting a job! </p>
   <br />
   <a href="/">Play again?</a>
   
